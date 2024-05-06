@@ -1,11 +1,13 @@
 import React from 'react'
-import InputBox from '../components/input.component'
+import InputBox from '../components/InputBox'
 import googleIcon from '../imgs/google.png'
 import { Link } from 'react-router-dom'
+import PageAnimation from '../common/page-animation'
 
-const Signup = () => {
+const Signup = ({type}) => {
   return (
-    <div className='flex justify-center items-center h-cover'>
+   <PageAnimation keyValue={type}>
+     <div className='flex justify-center items-center h-cover'>
         <form className='w-[80%] shadow-2xl  max-w-[400px] p-10'>
                 <h1 className='text-3xl text-center capitalize font-gelasio mb-16'>Welcome Back</h1>
                 <InputBox name="full name" type="text" id="" value="" icon = "fi-rr-user" placeholder="Full Name"/>
@@ -33,6 +35,7 @@ const Signup = () => {
                 </p>
         </form>
     </div>
+   </PageAnimation>
   )
 }
 
