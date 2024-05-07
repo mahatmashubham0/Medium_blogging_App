@@ -2,7 +2,7 @@ import { AnimatePresence , motion } from 'framer-motion'
 import React from 'react'
 
 const PageAnimation = ({
-  children , keyValue , initial = {opacity: 0}, animate = {opacity: 1}, transition = {duration: 2},className
+  children , keyValue , initial = {opacity: 0}, animate = {opacity: 1}, transition = {duration: 1},className
 }) => {
   return (
     <AnimatePresence>

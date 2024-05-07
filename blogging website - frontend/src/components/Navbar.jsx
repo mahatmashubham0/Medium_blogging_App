@@ -2,14 +2,15 @@
 import logo from "../imgs/logo.png";
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,Outlet } from "react-router-dom";
 
 const Navbar = () => {
   const [searchBoxVisiable, setSearchBoxVisiable] = useState(false);
-  const [checkLogin, setcheckLogin] = useState();
+  const [checkLogin, setcheckLogin] = useState(true);
 
   return (
-    <div>
+    <>
+      <div>
       <div className="navbar justify-between md:justify-start">
         {/* Logo */}
         <div className="w-28 flex-none">
@@ -78,6 +79,8 @@ const Navbar = () => {
         </div>
       </div>
     </div>
+    <Outlet />
+    </>
   );
 };
 
