@@ -26,20 +26,29 @@ const BlogEditor = () => {
     setBlog({...blog , title: e.target.value})
   }
 
+  
+
   useEffect(()=>{
-    let editor = new EditorJS({
+    setTextEditor(new EditorJS({
       holderId: "textEditor",
-      data: "",
+      data: content,
       tools: tools,
       placeholder: "Let's write an awesome story"
-    })
+    }))
   },[])
 
-  let {blog , setBlog , blog: {title , description , banner , content , tags}} = useContext(EditorContext);
+  let {blog , setBlog , blog: {title , description , banner , content , tags} , setEditorState
+  , textEditor , setTextEditor
+} = useContext(EditorContext);
+
+  const handlePublishEvenet = () => {
+    setEditorState("publish")
+  }
 
   return (
     <>
-    
+     
+    {/* navbar setting */}
     <div className="navbar">
       <div className=" flex items-cente gap-6">
         <Link to={"/"} className=" flex items-center">
@@ -53,33 +62,36 @@ const BlogEditor = () => {
       </div>
 
       <div className="flex gap-8 ml-auto">
-        <button className="btn-dark py-2">Publish</button>
+        <button className="btn-dark py-2" onClick={handlePublishEvenet}>Publish</button>
         <button className="btn-light py-2">Save Draft</button>
       </div>
     </div>
 
 
+    {/* Bloging Editing section */}
     <PageAnimation>
       <section>
         <div className="mx-auto w-full max-w-[900px]">
 
-             <div className=" aspect-video  opacity-80 border-4 border-grey relative">
+             <div className=" aspect-video  opacity-40 border-4 border-grey relative">
                 <label htmlFor = "uploadBanner">
                   <img src={blogbanner} alt="" className="z-20" srcset="" />
                   <input id="uploadBanner" type="file" accept=".png .jpg .jpeg" hidden  onChange={handleUploadImage}/>
                 </label>
              </div>
 
-             <textarea className="w-full h-20 text-4xl mt-8  placeholder:opacity-50 outline-none leading-tight font-medium" placeholder="Blog Title"
+             <textarea className="w-full h-20 text-4xl mt-8  placeholder:opacity-50 outline-none leading-tight font-medium" 
+             placeholder="Blog Title"
              onChange={handleTitleChange}
+             defaultValue={title}
              >
              </textarea>
 
              <hr className="w-full opacity-30 py-2"/>
 
-             <div id="textEditor" className="font-inter">
-
-             </div>
+             <div id="textEditor" defaultValue={content} className="font-inter"
+             onChange={()=>{setBlog({...blog , des : e.target.value})}}
+             ></div>
         </div>
 
       </section>

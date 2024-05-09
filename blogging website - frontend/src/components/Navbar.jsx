@@ -11,11 +11,11 @@ const Navbar = () => {
   return (
     <>
       <div>
-      <div className="navbar justify-between md:justify-start">
+      <div className="navbar justify-between flex items-center md:justify-start">
+        
         {/* Logo */}
         <div className="w-28 flex-none">
           <Link to="/" className="">
-            {/* <img src={logo} className="w-[50%]"/> */}
             <img
               src={
                 "https://logos-world.net/wp-content/uploads/2023/07/Medium-Logo.png"
@@ -24,7 +24,8 @@ const Navbar = () => {
             />
           </Link>
         </div>
-        {/* left-0 top-full mt-0  */}
+
+        {/* Search-bar */}
         <div
           className={`w-full absolute bg-white left-0 top-full  px-[5vw] py-4 border-grey md:relative md:inset-0 md:block md:p-0 md:w-auto md:show ${
             searchBoxVisiable ? "show" : "hide"
@@ -37,12 +38,9 @@ const Navbar = () => {
           />
           <i className="fi fi-rr-search text-dark-grey text-2xl absolute md:pointer-events-none right-[10%] md:left-5 top-[53%] -translate-y-1/2"></i>
         </div>
-
-        {/* links
-        <div></div> */}
-
-        {/* login and signup and profile section */}
-          <div className="gap-3 md:gap-6 ml-auto flex items-center">
+ 
+          {/* Search Icon for small size */}
+        <div className="gap-3 md:gap-6 ml-auto flex items-center">
             <button
               className="w-12 h-12 bg-grey rounded-full pt-2 md:hidden justify-center"
               onClick={() =>
@@ -51,7 +49,8 @@ const Navbar = () => {
             >
               <i className="fi fi-rr-search text-dark-grey text-2xl md:pointer-events-none right-[10%] md:left-5 top-[53%] -translate-y-1/2"></i>
             </button>
-          
+
+          {/* login and signup and profile section */}
 
           <Link
             to={checkLogin ? "/editor" : "/login"}
@@ -70,7 +69,7 @@ const Navbar = () => {
           <Link
             to={"/signup"}
             className="hidden md:flex link items-center justify-end rounded-2xl gap-2"
-          >            <p>Signup</p>
+          >    <p>Signup</p>
           </Link>
 
           <Link>

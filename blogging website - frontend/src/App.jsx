@@ -5,6 +5,7 @@ import Navbar from "../src/components/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Editor from "./pages/editor.pages";
+import Multiple from "./pages/404.page";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Router>
         <Routes>
             <Route path='/editor' element={<Editor />} />
+            <Route path='/error' element={<Multiple />} />
             <Route path='/' element={<Navbar />}>
                <Route path='/login' element={<Login />} /> {/*A nested route!*/}
                <Route path='/signup' element={<Signup />} /> {/*A nested route!*/}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const InputBox = ({ name, type, id, value, icon, placeholder }) => {
   const [showPassword , setShowPassowrd] = useState(false)
+
   return (
     <div className="relative w-[100%] mb-4">
       <input

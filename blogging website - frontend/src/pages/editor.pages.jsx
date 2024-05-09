@@ -19,10 +19,11 @@ const Editor = () => {
 
    const [blog , setBlog] = useState(blogStruture);
     // const {userAuth: {access_token}} = useContext(UserContext);
+    const [textEditor , setTextEditor] = useState();
     const [editorState , setEditorState] = useState("editor")
    const access_token = true
   return (
-    <EditorContext.Provider value={{blog , setBlog , editorState , setEditorState}}>
+    <EditorContext.Provider value={{blog , setBlog , editorState , setEditorState , setTextEditor , textEditor}}>
        {access_token === null ? <Navigate to={'/login'}/> : 
 
         editorState === "editor" ? <BlogEditor></BlogEditor> : <PublishEditor></PublishEditor>
