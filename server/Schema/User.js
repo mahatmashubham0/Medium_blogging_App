@@ -21,8 +21,6 @@ const userSchema = mongoose.Schema({
         password: String,
         username: {
             type: String,
-            minlength: [3, 'Username must be 3 letters long'],
-            unique: true,
         },
         bio: {
             type: String,

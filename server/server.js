@@ -1,7 +1,30 @@
+import express from 'express'
+import dotenv from 'dotenv'
 
+// Import files
+import connectOfDatabase from './database/databaseConnection.js'
+import apiRoutes from './routes/index.js'
 
+// done for config configuration
+dotenv.config();
 
+const app = express();
 
+app.use(express.json());
+
+// connectivity of DB
+connectOfDatabase();
+
+app.use('/api', apiRoutes)
+
+// basic route for testing
+app.get('/', (req,res)=>{
+  res.send("Done")
+})
+
+app.listen(process.env.PORT , ()=>{
+  console.log("Server Is running Successfully on Port", process.env.PORT)
+})
 
 
 
