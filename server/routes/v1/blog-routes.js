@@ -1,11 +1,8 @@
 import express from 'express'
-
-import {SingUp} from '../../controllers/user-controllers.js'
-import {Login} from '../../controllers/user-controllers.js'
+import { uploadImage } from '../../controllers/blog-controllers';
 
 // middlewares
-import {Auth , checkUser} from '../../middlewares/checkUserExits.js'
-import { uploadImage } from '../../controllers/blog-controllers.js';
+// import {Auth , checkUser} from '../../middlewares/checkUserExits.js'
 
 const router = express.Router();
 
@@ -15,13 +12,12 @@ const router = express.Router();
 // ********************************************************************************************************
 
 // // Route for user login
-router.post("/login", Login)
+router.post("/upoloadimage", (req,res)=>{
+    console.log("effefe")
+})
 
 // // Route for user signup
-router.post('/signup' , SingUp);
-
-
-router.post('/upoloadimage' , uploadImage);
+// router.post('/signup' , SingUp);
 
 // // Route for sending OTP to the user's email
 

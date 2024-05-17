@@ -23,6 +23,7 @@ function generateFormateData(user) {
 
 export const SingUp = async (req, res) => {
   try {
+
     // fetch data
     const { fullname, email, password } = req.body;
     console.log(fullname, email, password);
@@ -43,6 +44,7 @@ export const SingUp = async (req, res) => {
       });
     }
 
+    
     // check user exit or not
     let user = await User.findOne({ 
         'personal_info.email' : email
@@ -54,6 +56,7 @@ export const SingUp = async (req, res) => {
         successResponse
       })
     }
+   
 
     // generate the username
     let username = email.split("@")[0];
@@ -67,7 +70,7 @@ export const SingUp = async (req, res) => {
     });
 
     // calling for generate the token
-    token = generateFormateData(user);
+    let token = generateFormateData(user);
 
     // Cookie work here
     const options = {
@@ -120,7 +123,7 @@ export const Login = async (req, res) => {
        token = generateFormateData(user);
     }else {
       errorResponse.message = "Password is not match";
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      return res.status(StatusCodes.NOT_FOUND).json({
       errorResponse,
       });
     }

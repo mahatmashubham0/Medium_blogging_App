@@ -1,5 +1,9 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import cookieParser  from 'cookie-parser'
+import cors from 'cors'
+import fileUpload from 'express-fileupload'
+
 
 // Import files
 import connectOfDatabase from './database/databaseConnection.js'
@@ -10,7 +14,23 @@ dotenv.config();
 
 const app = express();
 
+// middlewares
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+	fileUpload({
+		useTempFiles:true,
+		tempFileDir:"/tmp",
+	})
+)
+
+// Cors Connection
+app.use(
+	cors({
+		origin:"http://localhost:3000",
+		credentials:true,
+	})
+)
 
 // connectivity of DB
 connectOfDatabase();
@@ -27,20 +47,3 @@ app.listen(process.env.PORT , ()=>{
 })
 
 
-
-// const fileUpload = require('express-fileupload')
-// import {v2 as cloudinary} from 'cloudinary';
-          
-// cloudinary.config({ 
-//   cloud_name: 'dx4cjscer', 
-//   api_key: '931633484229372', 
-//   api_secret: 'wEGodEWBK0GWDKkGn63IDVpc9tI' 
-// });
-
-// cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
-//   { public_id: "olympic_flag" }, 
-//   function(error, result) {console.log(result); });
-
-// app.user(fileUpload({
-//     useTempFiles: true
-// }))

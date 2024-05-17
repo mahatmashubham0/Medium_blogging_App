@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import EditorJS from '@editorjs/editorjs'
+import toast from "react-hot-toast";
 
 // components
 import logo from "../imgs/logo.png";
@@ -9,18 +10,42 @@ const name = "shubham mahatma";
 import blogbanner from '../imgs/blog banner.png'
 import { EditorContext } from "../pages/editor.pages";
 import {tools} from './tools.component'
+import { auth } from "../services/api";
+import { apiConnector } from "../services/apiConnector";
 
 const BlogEditor = () => {
 
-  const handleUploadImage = (e) => {
-    console.log("upload images",e)
-    const img = e.target.files[0]
-    console.log("==>",img)
+  const handleUploadImage = async (e) => {
+         const file = e.target.files[0]
+         let formData;
+         if (file) {
+        // console.log(file)
+        //  previewFile(file)
+        //  setImageFile(file)
+
+          formData = new FormData()
+          formData.append("bannerImage", file)
+       }
+
+    try {
+      const result =await apiConnector("POST", auth.image_api , formData);
+      console.log("Photo Uploaded successfully", result);
+      console.log(result?.data?.successResponse?.data);
+      toast.success("Image Uploaded")
+      toast.success(result?.data?.successResponse?.data?.user?.
+        personal_info?.fullname
+      )
+    } catch (error) {
+      console.log("error",error.AxiosError);
+      console.log("==>",error);
+      toast.error(error?.response?.data?.errorResponse?.message)
+      console.log("Cloud not login the User Profile");
+    }
+
   }
 
   const handleTitleChange = (e) => {
     let input = e.target;
-
     input.style.height = 'auto';
     input.style.height = input.scrollHeight + 'px' 
     setBlog({...blog , title: e.target.value})

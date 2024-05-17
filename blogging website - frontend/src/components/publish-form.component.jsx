@@ -3,7 +3,7 @@ import {Toaster} from 'react-hot-toast'
 
 // Components
 import PageAnimation from '../common/page-animation'
-import { EditorContext } from '../pages/editor.pages'
+// import { EditorContext } from '../pages/editor.pages'
 import fullLogo from '../imgs/full-logo.png'
 
 const PublishEditor = () => {

@@ -1,12 +1,29 @@
 // images
 import logo from "../imgs/logo.png";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link ,Outlet } from "react-router-dom";
+import { UserContext } from "../App";
+import UserNavigationPanel from "./user-navigation.component";
+import { removeFromSession } from "../common/session";
 
 const Navbar = () => {
   const [searchBoxVisiable, setSearchBoxVisiable] = useState(false);
   const [checkLogin, setcheckLogin] = useState(true);
+
+  const {userAuth , setuserAuth} = useContext(UserContext)
+  // console.log("==>",userAuth.success)
+
+  const [showUserPanel , setShowUserPanel] = useState(false)
+
+  const handleIfClickOutSideOfPanel = () => {
+    console.log("ff")
+  }
+
+  const handleSignOut = () => {
+    removeFromSession('user')
+    setuserAuth({token: null})
+  }
 
   return (
     <>
@@ -60,11 +77,21 @@ const Navbar = () => {
             <p>Write</p>
           </Link>
 
-          <Link
+          { //userAuth.data.token
+            userAuth?.data?.token ?
+            <Link
+            to={"/login"}
+            onClick={handleSignOut}
+            className="hidden md:flex bg-black text-white link items-center justify-end rounded-2xl gap-2">
+            <p>Sign Out</p>
+           </Link>
+            : 
+            <Link
             to={"/login"}
             className="hidden md:flex bg-black text-white link items-center justify-end rounded-2xl gap-2">
             <p>Login</p>
-          </Link>
+           </Link>
+          }
 
           <Link
             to={"/signup"}
@@ -73,7 +100,16 @@ const Navbar = () => {
           </Link>
 
           <Link>
-              <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg" alt="" srcset=""  className="w-14"/>
+              <div onClick={()=>setShowUserPanel((prev)=> !prev)} onBlur={handleIfClickOutSideOfPanel} >
+              <img src={ //userAuth.data.user.personal_info.profile_img
+                userAuth?.data?.user?.personal_info?.profile_img ? userAuth?.data?.user?.personal_info?.profile_img
+                : "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg" 
+              }alt="" srcset=""  className="w-14 rounded-full"/>
+              </div>
+
+              {
+                showUserPanel ? <UserNavigationPanel /> : ""
+              }
           </Link>
         </div>
       </div>
