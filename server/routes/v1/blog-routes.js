@@ -12,9 +12,9 @@ const router = express.Router();
 // ********************************************************************************************************
 
 // // Route for user login
-router.post("/upoloadimage", (req,res)=>{
-    console.log("effefe")
-})
+// router.post("/upoloadimage", (req,res)=>{
+//     console.log("effefe")
+// })
 
 // // Route for user signup
 // router.post('/signup' , SingUp);

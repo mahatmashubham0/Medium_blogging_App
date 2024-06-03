@@ -1,8 +1,16 @@
-POST   http://localhost:3300/api/v1/login
+POST   http://localhost:3300/api/v1/createBlog
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByZWV0aUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6InByZWV0aSIsImlkIjoiNjY0MThjMWVmNTJmZWFjMjNkOGQ4Mjk4IiwiaWF0IjoxNzE2NjEzNDAxLCJleHAiOjE3MTY2OTk4MDF9.ZcbeP6wk-Tl9Xa_zJi1CwY_LwnbeR0z_I41LUvTCVOM
 
 {
-    //"fullname": "Kriti Sanon",
-    "email": "kriti@gmail.com",
-    "password": "kriti"
+//    "title": "title not defined"    
+     "title": "Java",
+     "banner": "https://res.cloudinary.com/dx4cjscer/image/upload/v1716543452/dsgwqnu8ogqtqeebo2kv.png",
+      "des": "this is a proramming language",
+      "content": {
+        "blocks": [1,2,3]
+       },
+      "tags": ["tags1", "tags2"]
 }
+
+# "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByZWV0aUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6InByZWV0aSIsImlkIjoiNjY0MThjMWVmNTJmZWFjMjNkOGQ4Mjk4IiwiaWF0IjoxNzE2NjExNjM4LCJleHAiOjE3MTY2OTgwMzh9.rpGzH-gicne0fNCOZZxBje-6-JwQGH6LbQpLZfXxbSw"

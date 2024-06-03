@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import EditorJS from '@editorjs/editorjs'
 import toast from "react-hot-toast";
@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 // components
 import logo from "../imgs/logo.png";
 import PageAnimation from "../common/page-animation";
-const name = "shubham mahatma";
 import blogbanner from '../imgs/blog banner.png'
 import { EditorContext } from "../pages/editor.pages";
 import {tools} from './tools.component'
@@ -15,14 +14,12 @@ import { apiConnector } from "../services/apiConnector";
 
 const BlogEditor = () => {
 
+  const blogRef = useRef()
+
   const handleUploadImage = async (e) => {
          const file = e.target.files[0]
          let formData;
          if (file) {
-        // console.log(file)
-        //  previewFile(file)
-        //  setImageFile(file)
-
           formData = new FormData()
           formData.append("bannerImage", file)
        }
@@ -30,11 +27,10 @@ const BlogEditor = () => {
     try {
       const result =await apiConnector("POST", auth.image_api , formData);
       console.log("Photo Uploaded successfully", result);
-      console.log(result?.data?.successResponse?.data);
+      console.log(result?.data?.successResponse?.data?.userBlogImage?.blogImage);
       toast.success("Image Uploaded")
-      toast.success(result?.data?.successResponse?.data?.user?.
-        personal_info?.fullname
-      )
+      setBlog({...blog , banner: result?.data?.successResponse?.data?.userBlogImage?.blogImage})
+      blogRef.current.src = banner ? banner : result?.data?.successResponse?.data?.userBlogImage?.blogImage
     } catch (error) {
       console.log("error",error.AxiosError);
       console.log("==>",error);
@@ -44,14 +40,15 @@ const BlogEditor = () => {
 
   }
 
+  
+
   const handleTitleChange = (e) => {
     let input = e.target;
     input.style.height = 'auto';
     input.style.height = input.scrollHeight + 'px' 
+    console.log(input.value)
     setBlog({...blog , title: e.target.value})
-  }
-
-  
+  } 
 
   useEffect(()=>{
     setTextEditor(new EditorJS({
@@ -60,14 +57,23 @@ const BlogEditor = () => {
       tools: tools,
       placeholder: "Let's write an awesome story"
     }))
+    
+  //  blogRef.current.src = "https://res.cloudinary.com/dx4cjscer/image/upload/v1716543452/dsgwqnu8ogqtqeebo2kv.png"
+  //  setBlog({...blog , banner: "https://res.cloudinary.com/dx4cjscer/image/upload/v1716543452/dsgwqnu8ogqtqeebo2kv.png"})
+
   },[])
 
-  let {blog , setBlog , blog: {title , description , banner , content , tags} , setEditorState
-  , textEditor , setTextEditor
-} = useContext(EditorContext);
+   let {blog , blog: {title , description , banner , content , tags} , setBlog , setEditorState, textEditor , setTextEditor} = 
+   useContext(EditorContext);
 
-  const handlePublishEvenet = () => {
-    setEditorState("publish")
+  const handlePublishEvenet = () => {   // come from navbar
+    textEditor.save().then((data) => {
+      console.log("==>",data)
+      setBlog({...blog , content: data})
+      setEditorState("publish")  
+    }).catch((error)=>{
+      console.log("Error in blog writing",error)
+    })
   }
 
   return (
@@ -98,13 +104,15 @@ const BlogEditor = () => {
       <section>
         <div className="mx-auto w-full max-w-[900px]">
 
+              {/* Image banner */}
              <div className=" aspect-video  opacity-40 border-4 border-grey relative">
-                <label htmlFor = "uploadBanner">
-                  <img src={blogbanner} alt="" className="z-20" srcset="" />
+                <label htmlFor = "uploadBanner" >
+                  <img ref={blogRef} src={blogbanner} defaultValue={banner} alt="" className="z-20" srcset="" />
                   <input id="uploadBanner" type="file" accept=".png .jpg .jpeg" hidden  onChange={handleUploadImage}/>
                 </label>
              </div>
 
+              {/* text heading */}
              <textarea className="w-full h-20 text-4xl mt-8  placeholder:opacity-50 outline-none leading-tight font-medium" 
              placeholder="Blog Title"
              onChange={handleTitleChange}
@@ -114,8 +122,9 @@ const BlogEditor = () => {
 
              <hr className="w-full opacity-30 py-2"/>
 
-             <div id="textEditor" defaultValue={content} className="font-inter"
-             onChange={()=>{setBlog({...blog , des : e.target.value})}}
+            {/* text content */}
+             <div id="textEditor" className="font-inter"
+                defaultValue={content}
              ></div>
         </div>
 

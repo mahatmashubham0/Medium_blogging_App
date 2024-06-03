@@ -22,3 +22,54 @@ This website features include -
 13. Also user can change login password from settings.
 14. Its mobile responsive with modern design + fade in animation on pages.
 And much more.
+
+
+how to add image in cloudynary
+frontend code : 
+ const handleUploadImage = async (e) => {
+         const file = e.target.files[0]
+         let formData;
+         if (file) {
+          formData = new FormData()
+          formData.append("bannerImage", file)
+       }
+
+    try {
+      const result =await apiConnector("POST", auth.image_api , formData);
+      console.log("Photo Uploaded successfully", result);
+      console.log(result?.data?.successResponse?.data);
+      toast.success("Image Uploaded")
+      toast.success(result?.data?.successResponse?.data?.user?.
+        personal_info?.fullname
+      )
+    } catch (error) {
+      console.log("error",error.AxiosError);
+      console.log("==>",error);
+      toast.error(error?.response?.data?.errorResponse?.message)
+      console.log("Cloud not login the User Profile");
+    }
+
+  }
+--------------------------------------------------------------------
+  backend code : 
+  export const uploadImage = async(req,res) => {
+  
+    console.log("fefefeffeevf")
+    const photo = req.files.bannerImage;
+    console.log("images",photo);
+    const options = {
+      folder: "imageCollection",
+      options : 1000,
+      options : 1000,
+      resource_type : "auto"
+     }
+
+    cloudinary.uploader.upload(
+    photo.tempFilePath,
+    options,
+    function (error, result) {
+      console.log(result);
+    }
+  );
+
+};

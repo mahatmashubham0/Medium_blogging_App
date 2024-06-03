@@ -2,14 +2,14 @@ import User from "../Schema/User.js";
 import errorResponse from '../utils/error-response.js'
 import successResponse from '../utils/success-response.js'
 import StatusCodes from 'http-status-codes'
+import jwt from 'jsonwebtoken'
 
-export const Auth = async() => {
+export const Auth = async(req,res,next) => {
  
     try {
-        const token =
-    req.cookies.token ||
-    req.body.token ||
-    req.header("Authorization").replace("Bearer ", "");
+    console.log(req.body)
+    // const authHeader =  req.headers("Authorization").replace("Bearer", "");
+    const token = req.body.currentUserToken
 
     //if token not present give response
     console.log("token ",token)
@@ -22,7 +22,8 @@ export const Auth = async() => {
 
     // verify the token if present the token
     try {
-        const decode = await jwt.verify(token, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.Secret_key);
+        console.log("ff2ff")
         console.log("req.user obbject ==>",decode);
         req.user = decode;
       } catch (error) {
@@ -31,13 +32,15 @@ export const Auth = async() => {
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
           .json({ errorResponse });
       }
-      next()
+
     } catch (error) {
         errorResponse.message = "Something went wrong while check authentication of token";
         return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ errorResponse });
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ errorResponse });
     }
+
+    next()
 
 }
 

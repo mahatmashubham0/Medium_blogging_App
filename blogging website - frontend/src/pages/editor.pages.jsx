@@ -4,7 +4,7 @@ import BlogEditor from '../components/blog-editor.component';
 import PublishEditor from '../components/publish-form.component';
 import { UserContext } from '../App';
 
-const blogStruture = {
+export let blogStruture = {
   title : "",
   banner: "",
   content: [],
@@ -21,7 +21,7 @@ const Editor = () => {
 
     const {userAuth} = useContext(UserContext);
 
-    const [textEditor , setTextEditor] = useState();
+    const [textEditor , setTextEditor] = useState({isReady:false});
 
     const [editorState , setEditorState] = useState("editor")
 

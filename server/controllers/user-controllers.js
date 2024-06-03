@@ -15,6 +15,7 @@ function generateFormateData(user) {
     username: user.personal_info.username,
     id: user._id,
   };
+   console.log("payload",payload)
   let token = jwt.sign(payload, process.env.Secret_key, {
     expiresIn: "24h",
   });
@@ -114,7 +115,7 @@ export const Login = async (req, res) => {
 
     // User already present or not
     if (!user) {
-      successResponse.message = "User Not found Please Signup";
+      successResponse.message = "User Not found Please login";
       return res.status(StatusCodes.OK).json({
         successResponse,
       });

@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cookieParser  from 'cookie-parser'
 import cors from 'cors'
 import fileUpload from 'express-fileupload'
+import bodyParser from 'body-parser'
 
 
 // Import files
@@ -16,6 +17,7 @@ const app = express();
 
 // middlewares
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(
 	fileUpload({

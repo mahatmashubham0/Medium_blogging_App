@@ -5,7 +5,7 @@ import {Login} from '../../controllers/user-controllers.js'
 
 // middlewares
 import {Auth , checkUser} from '../../middlewares/checkUserExits.js'
-import { uploadImage } from '../../controllers/blog-controllers.js';
+import { createBlog, fetchAllBlogs, uploadImage } from '../../controllers/blog-controllers.js';
 
 const router = express.Router();
 
@@ -23,9 +23,9 @@ router.post('/signup' , SingUp);
 
 router.post('/upoloadimage' , uploadImage);
 
-// // Route for sending OTP to the user's email
+router.post("/createBlog", Auth , createBlog)
 
-// router.post("/sendotp", sendOTP)
+router.get("/getallblogs", fetchAllBlogs)
  
 // // Route for Changing the password
 // router.post("/changepassword",auth , changePassword)

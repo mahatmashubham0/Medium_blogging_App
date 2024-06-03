@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Editor from "./pages/editor.pages";
 import { lookInSession } from "./common/session";
+import Home from "./pages/home.page";
 
 export const UserContext = createContext({});
 
@@ -17,7 +18,7 @@ const App = () => {
   useEffect(()=>{
 
     let userSession = lookInSession("user")
-    console.log(userSession)
+    // console.log(userSession)
 
     userSession ? setuserAuth(JSON.parse(userSession)) : setuserAuth({token: null})
   },[])
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/editor" element={<Editor />} />
             {/* <Route path='/error' element={<Multiple />} /> */}
             <Route path="/" element={<Navbar />}>
+               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} /> {/*A nested route!*/}
               <Route path="/signup" element={<Signup />} />{" "}
               {/*A nested route!*/}
